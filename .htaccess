@@ -23,13 +23,6 @@ deny from all
 #allow from 123.123.123.123
 </Files>
 
-# STRONG HTACCESS PROTECTION</code>
-<Files ~ "^.*\.([Hh][Tt][Aa])">
-order allow,deny
-deny from all
-satisfy all
-</Files>
-
 #Proteger wp-config
 <files wp-config.php>
 order allow,deny
@@ -41,6 +34,13 @@ deny from all
 order allow,deny
 deny from all
 </files>
+
+# STRONG HTACCESS PROTECTION</code>
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</Files>
 
 # Proteger los plugins
 <Files ~ "\.(js|css)$">
