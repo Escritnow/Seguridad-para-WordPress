@@ -1,15 +1,54 @@
+# ========================
+# WordPress robots.txt
+# ========================
+
+# --- English ---
+# Block access to sensitive folders and paths for all bots
+# --- Español ---
+# Bloquea el acceso a carpetas y rutas sensibles para todos los bots
 User-agent: *
-Disallow: /cgi-bin
-Disallow: /wp-admin
-Disallow: /wp-includes
+Disallow: /cgi-bin/ # Blocks the cgi-bin directory / Bloquea el directorio cgi-bin
+Disallow: /wp-admin/ # Blocks WordPress admin area / Bloquea el área de administración de WordPress
+Disallow: /wp-includes/ # Blocks WordPress core files / Bloquea los archivos esenciales de WordPress
+Disallow: /wp-content/plugins/ # Blocks access to plugins folder / Bloquea el acceso a la carpeta de plugins
+Disallow: /wp-content/cache/ # Blocks cached content / Bloquea el contenido en caché
+Disallow: /wp-content/themes/ # Blocks access to themes folder / Bloquea el acceso a la carpeta de temas
+Disallow: /*/trackback/ # Blocks trackback URLs / Bloquea las URLs de trackback
+Disallow: /*/feed/ # Blocks RSS feed URLs / Bloquea las URLs de feeds RSS
+Disallow: /*/feed/rss/ # Blocks specific RSS feeds / Bloquea feeds RSS específicos
+Disallow: /category/* # Blocks category pages / Bloquea las páginas de categorías
+
+# --- English ---
+# Allow Googlebot access to CSS and JS files for proper rendering
+# --- Español ---
+# Permite que Googlebot acceda a archivos CSS y JS para un renderizado adecuado
+User-agent: Googlebot
+Allow: /*.css$ # Allows CSS files / Permite archivos CSS
+Allow: /*.js$ # Allows JS files / Permite archivos JS
+
+# --- English ---
+# Deny all other access by default to enhance security
+# --- Español ---
+# Niega todos los accesos no especificados para mayor seguridad
+Disallow: / # Deny all access / Niega todo acceso
+
+# ========================
+# Clean version for easy copy-paste
+# ========================
+User-agent: *
+Disallow: /cgi-bin/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
 Disallow: /wp-content/plugins/
 Disallow: /wp-content/cache/
 Disallow: /wp-content/themes/
-Disallow: */trackback/
-Disallow: */feed/
-Disallow: /*/feed/rss/$
+Disallow: /*/trackback/
+Disallow: /*/feed/
+Disallow: /*/feed/rss/
 Disallow: /category/*
 
-User-Agent: Googlebot
+User-agent: Googlebot
 Allow: /*.css$
 Allow: /*.js$
+
+Disallow: /
