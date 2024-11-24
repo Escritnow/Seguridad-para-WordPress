@@ -1,9 +1,18 @@
-# En este archivo voy a dejar los códigos necesario para mantener tu WordPress seguro 
+# ====================================
+# Seguridad para WordPress con .htaccess
+# ====================================
 
-# WordPress por defecto 
+# --- English ---
+# In this file, you'll find the necessary codes to enhance the security of your WordPress site.
+# --- Español ---
+# En este archivo encontrarás los códigos necesarios para mejorar la seguridad de tu sitio WordPress.
 
+# --- English ---
+# WordPress default settings
+# --- Español ---
+# Configuración por defecto de WordPress
 # BEGIN WordPress
-<ifModule mode_rewrite.c>
+<ifModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php$ – [L]
@@ -13,42 +22,64 @@ RewriteRule . /index.php [L]
 </ifModule>
 # END WordPress
 
-# Deshabilitar la exploración de directorios
+# --- English ---
+# Disable directory browsing for added security
+# --- Español ---
+# Deshabilitar la exploración de directorios para mayor seguridad
 Options -Indexes
 
-# Proteger el archivo xmlrpc.php y su solicitud
+# --- English ---
+# Protect the xmlrpc.php file and restrict access
+# --- Español ---
+# Proteger el archivo xmlrpc.php y restringir el acceso
 <Files xmlrpc.php>
 order deny,allow
 deny from all
+# Uncomment the line below to allow access from a specific IP
 #allow from 123.123.123.123
 </Files>
 
-#Proteger wp-config
+# --- English ---
+# Protect wp-config.php to prevent unauthorized access
+# --- Español ---
+# Proteger wp-config.php para evitar accesos no autorizados
 <files wp-config.php>
 order allow,deny
 deny from all
 </files>
 
-# Proteger el htaccess
+# --- English ---
+# Protect the .htaccess file itself
+# --- Español ---
+# Proteger el archivo .htaccess
 <files .htaccess>
 order allow,deny
 deny from all
 </files>
 
-# STRONG HTACCESS PROTECTION</code>
+# --- English ---
+# Strong .htaccess protection to block certain files
+# --- Español ---
+# Protección fuerte para .htaccess que bloquea ciertos archivos
 <Files ~ "^.*\.([Hh][Tt][Aa])">
 order allow,deny
 deny from all
 satisfy all
 </Files>
 
-# Proteger los plugins
+# --- English ---
+# Allow access only to plugin files like CSS and JS
+# --- Español ---
+# Permitir acceso solo a archivos de plugins como CSS y JS
 <Files ~ "\.(js|css)$">
   order allow,deny
   allow from all
 </Files>
 
-# Proteger de la inyección sql
+# --- English ---
+# Protect against SQL injection attacks
+# --- Español ---
+# Proteger contra ataques de inyección SQL
 Options +FollowSymLinks
 RewriteEngine On
 RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
@@ -56,7 +87,10 @@ RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
 RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
 RewriteRule ^(.*)$ index.php [F,L]
 
-# Para AntiSpam: denegar el acceso a solicitudes de no referencia
+# --- English ---
+# Anti-spam: Deny access to no-referrer POST requests
+# --- Español ---
+# Anti-spam: Denegar acceso a solicitudes POST sin referencia
 RewriteEngine On
 RewriteCond %{REQUEST_METHOD} POST
 RewriteCond %{REQUEST_URI} .wp-comments-post\.php*
@@ -64,3 +98,56 @@ RewriteCond %{HTTP_REFERER} !.*yourdomain.com.* [OR]
 RewriteCond %{HTTP_USER_AGENT} ^$
 RewriteRule (.*) http://%{REMOTE_ADDR}/$ [R=301,L]
 
+# ====================================
+# Clean version for easy copy-paste
+# ====================================
+<ifModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ – [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</ifModule>
+
+Options -Indexes
+
+<Files xmlrpc.php>
+order deny,allow
+deny from all
+</Files>
+
+<files wp-config.php>
+order allow,deny
+deny from all
+</files>
+
+<files .htaccess>
+order allow,deny
+deny from all
+</files>
+
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</Files>
+
+<Files ~ "\.(js|css)$">
+  order allow,deny
+  allow from all
+</Files>
+
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ index.php [F,L]
+
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} POST
+RewriteCond %{REQUEST_URI} .wp-comments-post\.php*
+RewriteCond %{HTTP_REFERER} !.*yourdomain.com.* [OR]
+RewriteCond %{HTTP_USER_AGENT} ^$
+RewriteRule (.*) http://%{REMOTE_ADDR}/$ [R=301,L]
